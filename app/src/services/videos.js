@@ -1,7 +1,7 @@
 import axios from "axios";
-import { host } from "services/controller.js";
+import { videoHost } from "services/controller.js";
 
-const url = `${host}/api/videos`;
+const url = `${videoHost}/api/videos`;
 
 
 export const uploadVideo = async (file) => {
@@ -12,7 +12,7 @@ export const uploadVideo = async (file) => {
     const res = await axios.post(url,formdata);
     return res.data;
   }catch(err){
-    throw new Error(err);
+    throw new Error("Request failed");
   }
 
 };

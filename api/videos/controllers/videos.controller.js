@@ -1,4 +1,4 @@
-const firebase= require("../firebase/config.js");
+const firebase = require("../firebase/config.js");
 const uuid = require("uuid");
 
 const uploadVideo = async (video) => {

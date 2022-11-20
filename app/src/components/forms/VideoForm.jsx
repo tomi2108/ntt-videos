@@ -26,7 +26,8 @@ const VideoForm = () => {
         // TODO: Show video not uploaded in ui
       }
       // TODO: Stop loading spinner
-      console.log(data.uploaded);
+    }).catch(() => {
+      // TODO: Show request failed to send error
     });
   };
 
@@ -34,9 +35,9 @@ const VideoForm = () => {
 
   return (
     <div>
-      <form action="submit" onSubmit={handleSubmit}>
+      <form id="video-upload-form" action="submit" onSubmit={handleSubmit}>
         <input type="file" name="video" id="video" onChange={handleChange} />
-        <button>Upload video</button>
+        <button type="submit">Upload video</button>
       </form>
 
     </div>
