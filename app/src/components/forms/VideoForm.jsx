@@ -5,7 +5,7 @@ import { uploadVideo } from "services/videos";
 const VideoForm = () => {
 
   const [video,setVideo] = useState(null);
-
+  const [videoVisibility,setVideoVisibility] = useState("public");
 
   const handleChange = (e) => {
     const files = e.target.files;
@@ -19,7 +19,7 @@ const VideoForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // TODO: Show video loading spinner in UI
-    uploadVideo(video).then((data) => {
+    uploadVideo(video,videoVisibility).then((data) => {
       if(data.uploaded){
         // TODO: Show uploaded video in ui
       }else{
@@ -31,15 +31,18 @@ const VideoForm = () => {
     });
   };
 
+  const handleVisibilityChange = () => {
+    setVideoVisibility((prev) => prev==="public"?"private":"public");
+  };
 
-
+  //TODO: Style visibilty toggle
   return (
     <div>
       <form id="video-upload-form" action="submit" onSubmit={handleSubmit}>
         <input type="file" name="video" id="video" onChange={handleChange} />
         <button type="submit">Upload video</button>
       </form>
-
+      <button onClick={handleVisibilityChange}>Toggle visibility</button>
     </div>
   );
 };
