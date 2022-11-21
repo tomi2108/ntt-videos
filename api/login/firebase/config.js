@@ -15,4 +15,4 @@ const app = firebaseApp.initializeApp(firebaseConfig);
 const auth = firebaseAuth.getAuth(app);
 
 
-module.exports = { auth,createFirebaseUser:firebaseAuth.createUserWithEmailAndPassword };
+module.exports = { auth,createFirebaseUser:firebaseAuth.createUserWithEmailAndPassword,loginFirebaseUser:firebaseAuth.signInWithEmailAndPassword };

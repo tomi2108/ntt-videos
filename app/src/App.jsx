@@ -1,9 +1,11 @@
-import VideoForm from "components/forms/VideoForm";
+import LoginForm from "components/forms/LoginForm";
+import RegisterForm from "components/forms/RegisterForm";
 
 const App = () => {
   return (
     <div>
-      <VideoForm/>
+      <LoginForm/>
+      <RegisterForm/>
     </div>
   );
 };

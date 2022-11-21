@@ -6,9 +6,19 @@ const url = `${loginHost}/api/login`;
 
 export const register = async (email,password) => {
   try{
+    const res = await axios.post(`${url}/register`,{ email,password });
+    return res.data;
+  }catch(err){
+    throw new Error(err.response.data.message);
+  }
+};
+
+
+export const loginWithEmailAndPassword = async (email,password) => {
+  try{
     const res = await axios.post(url,{ email,password });
     return res.data;
   }catch(err){
-    throw new Error(err);
+    throw new Error(err.response.data.message);
   }
 };
