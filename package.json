@@ -4,8 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "commit":"sui-mono commit",
     "test": "cd app && npm run test && cd ../api && npm run test",
     "prepare": "husky install && cd app && npm install && cd ../api && npm prepare"
+  },
+  "workspaces":["app","api","api/login","api/videos"],
+  "config": {
+    "sui-mono":{
+      "customScopes":["frontend","backend","videos","login"]
+    }
   },
   "keywords": [],
   "author": "",
@@ -13,6 +20,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.2.0",
     "@commitlint/config-conventional": "^17.2.0",
+    "@s-ui/mono": "^2.34.0",
     "eslint": "^8.27.0",
     "husky": "^8.0.2",
     "lint-staged": "^13.0.3"

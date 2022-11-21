@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "commit":"cd .. && npm run commit",
     "test": "cd videos && npm run test && cd ../login && npm run test",
     "prepare": "cd videos && npm install && cd ../login && npm install"
   },
+  "workspaces":["login","videos"],
   "keywords": [],
   "author": "",
   "license": "ISC",

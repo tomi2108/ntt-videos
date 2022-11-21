@@ -7,10 +7,12 @@
     "test": "tests"
   },
   "scripts": {
+    "commit":"cd ../.. && npm run commit",
     "start": "node index.js",
     "dev": "nodemon index.js",
     "test": ""
   },
+  "workspaces":["./"],
   "author": "",
   "license": "ISC",
   "dependencies": {
