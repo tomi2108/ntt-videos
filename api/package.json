@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prepare": "cd login && npm install && cd ../videos && npm install"
+    "test": "cd videos && npm run test && cd ../login && npm run test",
+    "prepare": "cd videos && npm install && cd ../login && npm install"
   },
   "keywords": [],
   "author": "",
