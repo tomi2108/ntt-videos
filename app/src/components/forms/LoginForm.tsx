@@ -1,14 +1,14 @@
-import { useFields } from "hooks/useFields";
-import { loginWithEmailAndPassword } from "services/login";
+import { useFields } from "../../hooks/useFields";
+import { loginWithEmailAndPassword } from "../../services/login";
 
 const LoginForm = () => {
 
-  const { fields,onChange,resetFields } = useFields({ email:"",password:"" });
+  const { fields, onChange, resetFields } = useFields({ email:"", password:"" });
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    loginWithEmailAndPassword(fields.email,fields.password)
+    loginWithEmailAndPassword(fields.email, fields.password)
       .then((userCredentials) => {
       //TODO: Set user in context (frontend login state)
         console.log(userCredentials);
@@ -16,7 +16,7 @@ const LoginForm = () => {
         //TODO: Show incorrect email or password error
         console.error(error);
       });
-    resetFields(e.target);
+    resetFields(e);
   };
 
   return (
@@ -26,7 +26,6 @@ const LoginForm = () => {
         <input type="password" name="password" id="login-password" onChange={onChange} required />
         <button type="submit">Login</button>
       </form>
-
     </div>
   );
 };

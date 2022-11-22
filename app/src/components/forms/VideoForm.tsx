@@ -1,28 +1,31 @@
 import { useState } from "react";
-import { uploadVideo } from "services/videos";
+import { uploadVideo } from "../../services/videos";
+import { VideoVisibility } from "../../types";
 
 
 const VideoForm = () => {
 
-  const [video,setVideo] = useState(null);
-  const [videoVisibility,setVideoVisibility] = useState("public");
+  const [video, setVideo] = useState<File>();
+  const [videoVisibility, setVideoVisibility] = useState<VideoVisibility>("public");
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
+    if(!files) throw new Error("Missing file");
 
-    if(files.length>1) throw new Error("You can only upload one video");
-    if(files.length===0) throw new Error("Upload a video to send");
+    if(files.length > 1) throw new Error("Too many files");
+    if(files.length === 0) throw new Error("Upload a video to send");
 
     const file = files[0];
     if(!file.type.startsWith("video")) throw new Error("File must be a video");
 
-    setVideo(e.target.files[0]);
+    setVideo(file);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if(!video) throw new Error("Missing File");
     // TODO: Show video loading spinner in UI
-    uploadVideo(video,videoVisibility).then((data) => {
+    uploadVideo(video, videoVisibility).then((data) => {
       if(data.uploaded){
         // TODO: Show uploaded video in ui
       }else{
@@ -35,7 +38,7 @@ const VideoForm = () => {
   };
 
   const handleVisibilityChange = () => {
-    setVideoVisibility((prev) => prev==="public"?"private":"public");
+    setVideoVisibility((prev) => prev === "public" ? "private" : "public");
   };
 
   //TODO: Style visibilty toggle

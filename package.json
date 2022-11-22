@@ -2,16 +2,25 @@
   "name": "ntt-videos",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "commit":"sui-mono commit",
+    "commit": "sui-mono commit",
     "test": "cd app && npm run test && cd ../api && npm run test",
-    "prepare": "husky install && cd app && npm install && cd ../api && npm prepare"
+    "prepare": "husky install"
   },
-  "workspaces":["app","api","api/login","api/videos"],
+  "workspaces": [
+    "app",
+    "api",
+    "api/login",
+    "api/videos"
+  ],
   "config": {
-    "sui-mono":{
-      "customScopes":["frontend","backend","videos","login"]
+    "sui-mono": {
+      "customScopes": [
+        "frontend",
+        "backend",
+        "videos",
+        "login"
+      ]
     }
   },
   "keywords": [],
@@ -23,10 +32,11 @@
     "@s-ui/mono": "^2.34.0",
     "eslint": "^8.27.0",
     "husky": "^8.0.2",
-    "lint-staged": "^13.0.3"
+    "lint-staged": "^13.0.3",
+    "ts-node-dev": "^2.0.0"
   },
   "lint-staged": {
-    "**/!(js)/*.js": "eslint --cache --fix",
-    "**/!(js)/*.jsx": "eslint --cache --fix"
+    "*.ts": "eslint --cache --fix",
+    "*.tsx": "eslint --cache --fix"
   }
 }
