@@ -7,7 +7,7 @@ const RegisterForm = () => {
   const { fields, onChange, resetFields } = useFields({ email:"", password:"", confirmPassword:"" });
 
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     if(fields.password.length < 6) return; //TODO: Show password muys be at least 6 characters
     if(fields.password !== fields.confirmPassword) return; //TODO: Show passwords must match error
@@ -18,7 +18,7 @@ const RegisterForm = () => {
       // TODO: Show request failed to send error
       console.error(error);
     });
-    resetFields(e);
+    resetFields(e.currentTarget);
   };
 
   return (
@@ -29,7 +29,6 @@ const RegisterForm = () => {
         <input type="password" name="confirmPassword" id="register-confirm-password" onChange={onChange} required />
         <button type="submit">Register</button>
       </form>
-
     </div>
   );
 };

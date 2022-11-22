@@ -7,8 +7,8 @@ export const useFields = <T>(obj: T) => {
     setFields((prev) => ({ ...prev, [evt.target.name]: evt.target.value }));
   };
 
-  const resetFields: React.FormEventHandler<HTMLFormElement> = (_) => {
-    // e.target.childNodes.forEach((input) => input.value = null);
+  const resetFields = (currentTarget: EventTarget & HTMLFormElement) => {
+    currentTarget.reset();
     setFields(obj);
   };
 

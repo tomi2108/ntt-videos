@@ -10,7 +10,7 @@ export const register = async (email: string, password: string) => {
     return res.data;
   }catch(err){
     if(err instanceof AxiosError){
-      throw new Error(err.response?.data.message);
+      throw new Error(`Request failed: ${err.response?.data.message ?? "No response"}`);
     } else throw err;
   }
 };
@@ -22,7 +22,7 @@ export const loginWithEmailAndPassword = async (email: string, password: string)
     return res.data;
   }catch(err){
     if(err instanceof AxiosError){
-      throw new Error(err.response?.data.message);
+      throw new Error(`Request failed: ${err.response?.data.message ?? "No response"}`);
     } else throw err;
   }
 };

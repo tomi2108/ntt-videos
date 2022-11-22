@@ -6,7 +6,7 @@ const LoginForm = () => {
   const { fields, onChange, resetFields } = useFields({ email:"", password:"" });
 
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     loginWithEmailAndPassword(fields.email, fields.password)
       .then((userCredentials) => {
@@ -16,7 +16,7 @@ const LoginForm = () => {
         //TODO: Show incorrect email or password error
         console.error(error);
       });
-    resetFields(e);
+    resetFields(e.currentTarget);
   };
 
   return (
