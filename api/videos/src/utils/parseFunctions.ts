@@ -1,4 +1,4 @@
-import { decodedToken, unknownToken, unknownUser, User } from "../types";
+import { decodedToken, unknownToken } from "../types";
 
 const isString = (param: unknown): param is string => typeof param === "string" || param instanceof String;
 const isBoolean = (param: unknown): param is boolean => typeof param === "boolean";
@@ -14,11 +14,6 @@ export const toString = (param: unknown): string  => {
   return param;
 };
 
-export const toNewUser = (unknownUser: unknownUser): User => {
-  return { email:toString(unknownUser.email), password:toString(unknownUser.password) };
-};
-
-
 export const toDecodedToken = (unknownToken: unknownToken): decodedToken => {
-  return { token:toString(unknownToken?.token), valid:toBoolean(unknownToken?.valid) };
+  return { token:toString(unknownToken.token), valid:toBoolean(unknownToken.valid) };
 };
