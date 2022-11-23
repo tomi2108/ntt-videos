@@ -1,4 +1,4 @@
-import { toBoolean, toDecodedToken, toString } from "../utils/parserFunctions";
+import { toBoolean, toDecodedToken, toString } from "../../utils/parserFunctions";
 
 describe("Videos api parser functions", () => {
 
