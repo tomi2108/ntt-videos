@@ -1,7 +1,7 @@
 import express from "express";
 import { createUser, loginUser } from "../controllers/login.controller";
 import { validateToken } from "../controllers/token.controller";
-import { toNewUser, toString } from "../utils/parseFunctions";
+import { toNewUser, toString } from "../utils/parserFunctions";
 const router = express.Router();
 
 

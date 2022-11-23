@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { verifyToken } from "../services/login";
-import { toDecodedToken } from "./parseFunctions";
+import { toDecodedToken } from "./parserFunctions";
 
 const getTokenFrom = (request: Request) => {
   const authorization = request.get("authorization");

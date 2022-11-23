@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { User } from "../types";
-import { toString } from "../utils/parseFunctions";
+import { toString } from "../utils/parserFunctions";
 
 
 export const createToken = (user: User) => {
