@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "commit": "sui-mono commit",
+    "commit": "npm run test && sui-mono commit",
     "test": "cd app && npm run test && cd ../api && npm run test",
     "prepare": "husky install"
   },
