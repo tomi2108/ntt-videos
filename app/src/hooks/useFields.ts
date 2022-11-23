@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const useFields = <T>(obj: T) => {
+export const useFields = <T extends{ [key: string]: string | number }> (obj: T) => {
   const [fields, setFields] = useState(obj);
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = (evt) => {
