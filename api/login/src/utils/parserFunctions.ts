@@ -18,7 +18,6 @@ export const toNewUser = (unknownUser: unknownUser): User => {
   return { email:toString(unknownUser.email), password:toString(unknownUser.password) };
 };
 
-
 export const toDecodedToken = (unknownToken: unknownToken): decodedToken => {
-  return { token:toString(unknownToken?.token), valid:toBoolean(unknownToken?.valid) };
+  return { token:toString(unknownToken.token), valid:toBoolean(unknownToken.valid) };
 };

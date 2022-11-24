@@ -6,8 +6,9 @@ import { toString } from "../../utils/parserFunctions";
 
 describe("Login api token controller", () => {
 
-  describe("createToken", () => {
-    test("creates token correctly", () => {
+  describe("creating a token", () => {
+
+    test("suceeds with correct data", () => {
       const fakeUser = { email:"fake@gmail.com", password:"1234" };
       const token = createToken(fakeUser);
       expect(typeof token).toStrictEqual("string");
@@ -19,10 +20,12 @@ describe("Login api token controller", () => {
       expect(decodedToken.password).toStrictEqual("1234");
 
     });
+
   });
 
-  describe("validateToken", () => {
-    test("validates token if its valid", () => {
+  describe("validating a token", () => {
+
+    test("succeeds if token is valid", () => {
       const secret = toString(process.env.JWT_SECRET);
       const fakeUser = { email:"fake@gmail.com", password:"1234" };
       const token = jwt.sign(fakeUser, secret, { expiresIn:60 });
@@ -30,9 +33,9 @@ describe("Login api token controller", () => {
       const isValid = validateToken(token);
       expect(isValid).toStrictEqual(true);
     });
-    test("does not validate token if its invalid", () => {
-      const token = "badToken";
 
+    test("fails if token is invalid", () => {
+      const token = "badToken";
       const isValid = validateToken(token);
       expect(isValid).toStrictEqual(false);
     });

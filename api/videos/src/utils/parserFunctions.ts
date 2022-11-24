@@ -15,6 +15,6 @@ export const toString = (param: unknown): string  => {
   return param;
 };
 
-export const toDecodedToken = ({ token, valid }: unknownToken): decodedToken => {
-  return { token:toString(token), valid:toBoolean(valid) };
+export const toDecodedToken = (unknownToken: unknownToken): decodedToken => {
+  return { token:toString(unknownToken.token), valid:toBoolean(unknownToken.valid) };
 };

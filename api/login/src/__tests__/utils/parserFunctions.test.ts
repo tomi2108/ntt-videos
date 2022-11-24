@@ -1,4 +1,4 @@
-import { toBoolean, toDecodedToken, toString } from "../../utils/parserFunctions";
+import { toBoolean, toDecodedToken, toNewUser, toString } from "../../utils/parserFunctions";
 
 describe("Login api parser functions", () => {
 
@@ -98,6 +98,32 @@ describe("Login api parser functions", () => {
       expect(() => toDecodedToken({ valid:x, token:"test" })).toThrowError();
       expect(() => toDecodedToken({ valid:undefined, token:"test" })).toThrowError();
       expect(() => toDecodedToken({ valid:null, token:"test" })).toThrowError();
+    });
+  });
+
+  describe("toNewUser", () => {
+    test("returns the new user if parameter is a valid user", () => {
+      expect(toNewUser({ email:"user@email.com", password:"password" })).toStrictEqual({ email:"user@email.com", password:"password" });
+    });
+
+    test("fails if property email is not string", () => {
+      function x() {return;}
+      expect(() => toNewUser({ email:3, password:"password" })).toThrowError();
+      expect(() => toNewUser({ email:true, password:"password" })).toThrowError();
+      expect(() => toNewUser({ email:{ a:1 }, password:"password" })).toThrowError();
+      expect(() => toNewUser({ email:x, password:"password" })).toThrowError();
+      expect(() => toNewUser({ email:undefined, password:"password" })).toThrowError();
+      expect(() => toNewUser({ email:null, password:"password" })).toThrowError();
+    });
+
+    test("fails if property valid is not boolean", () => {
+      function x() {return;}
+      expect(() => toNewUser({ password:3, email:"randomEmail@gmail.com" })).toThrowError();
+      expect(() => toNewUser({ password:true, email:"randomEmail@gmail.com" })).toThrowError();
+      expect(() => toNewUser({ password:{ a:1 }, email:"randomEmail@gmail.com" })).toThrowError();
+      expect(() => toNewUser({ password:x, email:"randomEmail@gmail.com" })).toThrowError();
+      expect(() => toNewUser({ password:undefined, email:"randomEmail@gmail.com" })).toThrowError();
+      expect(() => toNewUser({ password:null, email:"randomEmail@gmail.com" })).toThrowError();
     });
 
   });

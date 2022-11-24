@@ -12,7 +12,7 @@ router.post("/register", (req, res) => {
     return;
   }
 
-  createUser(newUser.email, newUser.password)
+  createUser(newUser)
     .then((userCredentials) => res.status(201).send(userCredentials))
     .catch(() => res.status(400).send({ message:"User already exists" }));
 });
@@ -28,9 +28,9 @@ router.post("/token", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  const newUser = toNewUser(req.body);
+  const user = toNewUser(req.body);
 
-  loginUser(newUser.email, newUser.password)
+  loginUser(user)
     .then((userCredentials) => res.status(200).send(userCredentials))
     .catch(() => res.status(400).send({ message:"Wrong email or password" }));
 });
