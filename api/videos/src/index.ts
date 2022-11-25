@@ -18,7 +18,9 @@ api.use("/api/videos", videoRouter);
 
 
 api.listen(PORT, () => {
+
   console.log(`Server running on port ${PORT}`);
+
 });
 
 

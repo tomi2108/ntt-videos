@@ -5,19 +5,25 @@ const router = express.Router();
 
 
 router.post("/", tokenExtractor, (req, res) => {
+
   if(!req.files?.video) {
-    res.status(400).send({ message:"Missing file" });
+
+    res.status(400).send({ message: "Missing file" });
     return;
+
   }
 
   if (req.files.video instanceof Array) {
-    res.status(400).send({ message:"Too many files" });
+
+    res.status(400).send({ message: "Too many files" });
     return;
+
   }
 
   uploadVideo(req.files.video, req.body.visibility)
-    .then((uploadResult) => res.status(201).send({ uploaded:true, visibility:uploadResult.customMetadata?.visibility }))
-    .catch(() =>  res.status(408).send({ uploaded:false }));
+    .then((uploadResult) => res.status(201).send({ uploaded: true, visibility: uploadResult.customMetadata?.visibility }))
+    .catch(() =>  res.status(408).send({ uploaded: false }));
+
 });
 
 

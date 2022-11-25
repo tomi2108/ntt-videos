@@ -3,6 +3,7 @@ import RegisterForm from "./components/forms/RegisterForm";
 import VideoForm from "./components/forms/VideoForm";
 
 const App = () => {
+
   return (
     <div>
       <VideoForm/>
@@ -10,6 +11,7 @@ const App = () => {
       <RegisterForm/>
     </div>
   );
+
 };
 
 export default App;

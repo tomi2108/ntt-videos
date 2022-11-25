@@ -3,20 +3,26 @@ import { loginWithEmailAndPassword } from "../../services/login";
 
 const LoginForm = () => {
 
-  const { fields, onChange, resetFields } = useFields({ email:"", password:"" });
+  const { fields, onChange, resetFields } = useFields({ email: "", password: "" });
 
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+
     e.preventDefault();
     loginWithEmailAndPassword(fields.email, fields.password)
       .then((userCredentials) => {
-      //TODO: Set user in context (frontend login state)
+
+        //TODO: Set user in context (frontend login state)
         console.log(userCredentials);
+
       }).catch((error) => {
+
         //TODO: Show incorrect email or password error
         console.error(error);
+
       });
     resetFields(e.currentTarget);
+
   };
 
   return (
@@ -28,6 +34,7 @@ const LoginForm = () => {
       </form>
     </div>
   );
+
 };
 
 export default LoginForm;

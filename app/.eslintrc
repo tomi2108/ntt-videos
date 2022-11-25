@@ -36,6 +36,16 @@
     "eqeqeq": "error",
     "no-trailing-spaces": "error",
     "comma-dangle": "error",
+    "key-spacing": [
+      "error",
+      {
+        "mode": "strict"
+      }
+    ],
+    "array-bracket-spacing": [
+      "error",
+      "never"
+    ],
     "object-curly-spacing": [
       "error",
       "always"
@@ -48,6 +58,18 @@
       }
     ],
     "no-console": 1,
+    "padded-blocks": [
+      "error",
+      "always",
+      {
+        "allowSingleLineBlocks": true
+      }
+    ],
+    "no-whitespace-before-property": "error",
+    "jsx-quotes": [
+      "error",
+      "prefer-double"
+    ],
     "react/prop-types": 0,
     "react/react-in-jsx-scope": 0,
     "@typescript-eslint/space-infix-ops": "error",

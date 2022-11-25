@@ -14,4 +14,5 @@ export const uploadVideo = async (file: Blob, visibility: VideoVisibility) => {
 
   const res = await axios.post(videoServiceUrl, formdata );
   return res.data;
+
 };

@@ -4,21 +4,27 @@ import { register } from "../../services/login";
 
 const RegisterForm = () => {
 
-  const { fields, onChange, resetFields } = useFields({ email:"", password:"", confirmPassword:"" });
+  const { fields, onChange, resetFields } = useFields({ email: "", password: "", confirmPassword: "" });
 
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+
     e.preventDefault();
     if(fields.password.length < 6) return; //TODO: Show password muys be at least 6 characters
     if(fields.password !== fields.confirmPassword) return; //TODO: Show passwords must match error
     register(fields.email, fields.password).then((userCredentials) => {
+
       //TODO: Set user in context (frontend login state)
       console.log(userCredentials);
+
     }).catch((error) => {
+
       // TODO: Show request failed to send error
       console.error(error);
+
     });
     resetFields(e.currentTarget);
+
   };
 
   return (
@@ -31,6 +37,7 @@ const RegisterForm = () => {
       </form>
     </div>
   );
+
 };
 
 export default RegisterForm;
