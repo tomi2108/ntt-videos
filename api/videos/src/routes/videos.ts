@@ -20,7 +20,7 @@ router.post("/", tokenExtractor, (req, res) => {
 
   }
 
-  uploadVideo(req.files.video, req.body.visibility)
+  uploadVideo(req.files.video.data, req.body.visibility)
     .then((uploadResult) => res.status(201).send({ uploaded: true, visibility: uploadResult.customMetadata?.visibility }))
     .catch(() =>  res.status(408).send({ uploaded: false }));
 

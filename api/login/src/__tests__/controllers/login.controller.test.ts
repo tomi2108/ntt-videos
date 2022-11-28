@@ -1,23 +1,10 @@
-import bcrypt from "bcrypt";
-import { addDoc, collection, deleteDoc, getDocs, query } from "firebase/firestore";
 import { createUser, getUserByEmail, loginUser } from "../../controllers/login.controller";
-import { store } from "../../db/config";
-
-const fakeUser = { email: "fake@email.com", password: "superSecretPassword" };
+import { existingUser, initializeTestDb, newUser } from "../helpers/users";
 
 
-beforeAll(async () => {
+beforeEach(async () => {
 
-  const q = query(collection(store, "users"));
-  const snapshot = await getDocs(q);
-
-  const promises = snapshot.docs.map(async (doc) => await deleteDoc(doc.ref));
-
-  await Promise.all(promises);
-
-  const userCollection = collection(store, "users");
-  const encryptedFakeUser = { ...fakeUser, password: await bcrypt.hash(fakeUser.password, 10) };
-  await addDoc(userCollection, encryptedFakeUser );
+  await initializeTestDb();
 
 });
 
@@ -28,7 +15,7 @@ describe("Login api login controller", () => {
 
     test("succeeds with existing user", async () => {
 
-      const user = await getUserByEmail(fakeUser.email);
+      const user = await getUserByEmail(existingUser.email);
       expect(user?.email).toBeTruthy();
       expect(user?.password).toBeTruthy();
 
@@ -46,15 +33,15 @@ describe("Login api login controller", () => {
 
     test("succeeds with new user", async () => {
 
-      const anotherFakeUser = { email: "anotherUser@email.com", password: "12345912" };
-      const user = await createUser(anotherFakeUser);
+
+      const user = await createUser(newUser);
       expect(user.token).toBeDefined();
 
     });
 
     test("fails with existing user", async () => {
 
-      await expect(createUser(fakeUser)).rejects.toThrowError("User already exists");
+      await expect(createUser(existingUser)).rejects.toThrowError("User already exists");
 
     });
 
@@ -64,22 +51,22 @@ describe("Login api login controller", () => {
 
     test("succeeds with correct password", async () => {
 
-      const user = await loginUser(fakeUser);
+      const user = await loginUser(existingUser);
       expect(user.token).toBeDefined();
-      expect(user.email).toStrictEqual(fakeUser.email);
-      expect(user.password).not.toStrictEqual(fakeUser.password);
+      expect(user.email).toStrictEqual(existingUser.email);
+      expect(user.password).not.toStrictEqual(existingUser.password);
 
     });
 
     test("fails with wrong password", async () => {
 
-      await expect(loginUser({ ...fakeUser, password: "wrongPassword" })).rejects.toThrowError("Incorrect email or password");
+      await expect(loginUser({ ...existingUser, password: "wrongPassword" })).rejects.toThrowError("Incorrect email or password");
 
     });
 
     test("fails with if user does not exist", async () => {
 
-      await expect(loginUser({ ...fakeUser, email: "nonexting@email.com" })).rejects.toThrowError("User not found");
+      await expect(loginUser({ ...existingUser, email: "nonexting@email.com" })).rejects.toThrowError("User not found");
 
     });
 

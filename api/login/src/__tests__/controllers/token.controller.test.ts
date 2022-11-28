@@ -1,9 +1,7 @@
-import jwt, { JwtPayload } from "jsonwebtoken";
 
 import { createToken, validateToken } from "../../controllers/token.controller";
-import { toString } from "../../utils/parserFunctions";
-
-const fakeUser = { email: "fake@gmail.com", password: "1234" };
+import { decodeTokenHelper, encodeTokenHelper } from "../helpers/tokens";
+import { existingUser } from "../helpers/users";
 
 describe("Login api token controller", () => {
 
@@ -11,14 +9,13 @@ describe("Login api token controller", () => {
 
     test("suceeds with correct data", () => {
 
-      const token = createToken(fakeUser);
+      const token = createToken(existingUser);
       expect(typeof token).toStrictEqual("string");
 
-      const secret = toString(process.env.JWT_SECRET);
-      const decodedToken = jwt.verify(token, secret) as JwtPayload;
+      const decodedToken = decodeTokenHelper(token);
 
-      expect(decodedToken.email).toStrictEqual("fake@gmail.com");
-      expect(decodedToken.password).toStrictEqual("1234");
+      expect(decodedToken.email).toStrictEqual(existingUser.email);
+      expect(decodedToken.password).toStrictEqual(existingUser.password);
 
     });
 
@@ -28,18 +25,16 @@ describe("Login api token controller", () => {
 
     test("succeeds if token is valid", () => {
 
-      const secret = toString(process.env.JWT_SECRET);
-      const token = jwt.sign(fakeUser, secret, { expiresIn: 60 });
+      const token = encodeTokenHelper(existingUser);
 
-      const isValid = validateToken(token, fakeUser.email);
+      const isValid = validateToken(token, existingUser.email);
       expect(isValid).toStrictEqual(true);
 
     });
 
     test("fails if email is invalid", () => {
 
-      const secret = toString(process.env.JWT_SECRET);
-      const token = jwt.sign(fakeUser, secret, { expiresIn: 60 });
+      const token = encodeTokenHelper(existingUser);
 
       const isValid = validateToken(token, "badEmail@email.com");
       expect(isValid).toStrictEqual(false);
@@ -49,7 +44,7 @@ describe("Login api token controller", () => {
     test("fails if token is invalid", () => {
 
       const token = "badToken";
-      const isValid = validateToken(token, fakeUser.email);
+      const isValid = validateToken(token, existingUser.email);
       expect(isValid).toStrictEqual(false);
 
     });
