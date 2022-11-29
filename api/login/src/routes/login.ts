@@ -21,14 +21,14 @@ router.post("/register", (req, res) => {
 
 });
 
-router.post("/token", (req, res) => {
+router.post("/token", async (req, res) => {
 
   const token = toString(req.body.token);
   const email = toString(req.body.email);
 
-  validateToken(token, email) ?
-    res.status(200).send({ email, token, valid: true }) :
-    res.status(400).send({ email, token, valid: false });
+  await validateToken(token, email)
+    .then(() => res.status(200).send({ email, token, valid: true }))
+    .catch( err => res.status(400).send({ email, token, valid: false, message: err.message }));
 
 });
 

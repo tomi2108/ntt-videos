@@ -1,6 +1,7 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { User } from "../types";
 import { toString } from "../utils/parserFunctions";
+import { getUserByEmail } from "./login.controller";
 
 
 export const createToken = (user: User) => {
@@ -12,18 +13,13 @@ export const createToken = (user: User) => {
 };
 
 
-export const validateToken = (token: string, email: string): boolean => {
+export const validateToken = async (token: string, email: string) => {
 
   const secret = toString(process.env.JWT_SECRET);
-  try{
+  await getUserByEmail(email);
 
-    const user = jwt.verify(token, secret) as JwtPayload;
-    return user.email === email;
-
-  }catch{
-
-    return false;
-
-  }
+  const user = jwt.verify(token, secret) as JwtPayload;
+  if (user.email !== email ) throw new Error("Bad token");
+  return true;
 
 };

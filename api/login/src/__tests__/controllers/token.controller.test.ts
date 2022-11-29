@@ -1,7 +1,13 @@
 
 import { createToken, validateToken } from "../../controllers/token.controller";
 import { decodeTokenHelper, encodeTokenHelper } from "../helpers/tokens";
-import { existingUser } from "../helpers/users";
+import { existingUser, initializeTestDb, newUser } from "../helpers/users";
+
+beforeEach(async () => {
+
+  await initializeTestDb();
+
+});
 
 describe("Login api token controller", () => {
 
@@ -23,29 +29,41 @@ describe("Login api token controller", () => {
 
   describe("validating a token", () => {
 
-    test("succeeds if token is valid", () => {
+    test("succeeds if token is valid", async () => {
 
       const token = encodeTokenHelper(existingUser);
 
-      const isValid = validateToken(token, existingUser.email);
+      const isValid = await validateToken(token, existingUser.email);
       expect(isValid).toStrictEqual(true);
 
     });
 
-    test("fails if email is invalid", () => {
+    test("fails if email is invalid", async () => {
 
       const token = encodeTokenHelper(existingUser);
 
-      const isValid = validateToken(token, "badEmail@email.com");
-      expect(isValid).toStrictEqual(false);
+      await expect(validateToken(token, "badEmail@email.com")).rejects.toThrowError("User not found");
 
     });
 
-    test("fails if token is invalid", () => {
+    test("fails if token is invalid", async () => {
 
       const token = "badToken";
-      const isValid = validateToken(token, existingUser.email);
-      expect(isValid).toStrictEqual(false);
+      await expect(validateToken(token, existingUser.email)).rejects.toThrowError("jwt malformed");
+
+    });
+
+    test("fails if user is non existing", async () => {
+
+      const token = encodeTokenHelper(newUser);
+      await expect(validateToken(token, newUser.email)).rejects.toThrowError("User not found");
+
+    });
+
+    test("fails if email user does not match token user", async () => {
+
+      const token = encodeTokenHelper(newUser);
+      await expect(validateToken(token, existingUser.email)).rejects.toThrowError("Bad token");
 
     });
 
